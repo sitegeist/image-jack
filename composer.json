@@ -45,15 +45,12 @@
       "typo3/class-alias-loader": true
     }
   },
-  "replace": {
-    "typo3-ter/image-jack": "self.version"
-  },
   "extra": {
     "typo3/cms": {
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
       "app-dir": ".Build",
       "web-dir": ".Build/Web",
-      "extension-key": "image-jack"
+      "extension-key": "image_jack"
     }
   },
   "scripts": {
