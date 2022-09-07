@@ -1,0 +1,67 @@
+{
+  "name": "sitegeist/image-jack",
+  "type": "typo3-cms-extension",
+  "homepage": "https://github.com/sitegeist/image-jack",
+  "license": ["GPL-2.0-or-later"],
+  "keywords": ["typo3", "typo3-extension", "image", "optimization"],
+  "description": "Jack of all trades concerning image optimization. Also introduces the usage of next-gen-image-formats",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Benjamin Tammling",
+      "email": "extensions@sitegeist.de",
+      "role": "Developer",
+      "homepage": "https://www.sitegeist.de"
+    },
+    {
+      "name": "Thorsten Schramm",
+      "email": "extensions@sitegeist.de",
+      "role": "Developer",
+      "homepage": "https://www.sitegeist.de"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/sitegeist/image-jack/issues"
+  },
+  "require": {
+    "php": ">=7.4.0",
+    "typo3/cms-core": "^10.4 || ^11.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sitegeist\\ImageJack\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Sitegeist\\ImageJack\\Tests\\": "Tests"
+    }
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin",
+    "allow-plugins": {
+      "typo3/cms-composer-installers": true,
+      "typo3/class-alias-loader": true
+    }
+  },
+  "replace": {
+    "typo3-ter/image-jack": "self.version"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "app-dir": ".Build",
+      "web-dir": ".Build/Web",
+      "extension-key": "image-jack"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+    ],
+    "prepare-release": [
+      "rm -r .github .ecrc .editorconfig .gitattributes Build Tests"
+    ]
+  }
+}
