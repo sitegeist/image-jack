@@ -18,4 +18,11 @@ call_user_func(function () {
         'className' => Sitegeist\ImageJack\Processor\ImageJackProcessor::class,
         'before' => ['LocalImageProcessor'],
     ];
+
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['imageModifier']['jpegOptimizer'] =
+        \Sitegeist\ImageJack\ImageModifier\JpegOptimizer::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['imageModifier']['pngOptimizer'] =
+        \Sitegeist\ImageJack\ImageModifier\PngOptimizer::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['imageModifier']['webpConverter'] =
+        \Sitegeist\ImageJack\ImageModifier\WebpConverter::class;
 });
