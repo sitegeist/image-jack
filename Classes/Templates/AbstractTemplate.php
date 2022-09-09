@@ -19,7 +19,7 @@ class AbstractTemplate
     public function __construct(ProcessedFile $image)
     {
         $this->image = $image;
-        $this->imagePath = Environment::getPublicPath() . $image->getPublicUrl();
+        $this->imagePath = rtrim(Environment::getPublicPath(), '/') . '/' . $image->getPublicUrl();
         $this->logger = GeneralUtility::makeInstance(LoggerUtility::class);
     }
 }
