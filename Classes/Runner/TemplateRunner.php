@@ -11,9 +11,9 @@ class TemplateRunner
 {
     protected array $templates = [];
 
-    protected ProcessedFile $processedFile;
+    protected ?ProcessedFile $processedFile;
 
-    public function __construct(ProcessedFile $processedFile)
+    public function __construct(?ProcessedFile $processedFile)
     {
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates'])
             && (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']))) {
@@ -25,12 +25,35 @@ class TemplateRunner
 
     public function run(): void
     {
-        foreach ($this->templates as $className) {
-            /** @var TemplateInterface $templates */
-            $template = GeneralUtility::makeInstance($className, $this->processedFile);
-            if ($template->canProcessImage()) {
-                $template->processFile();
+        if (is_a($this->processedFile, ProcessedFile::class)) {
+            foreach ($this->templates as $className) {
+                try {
+                    /** @var TemplateInterface $templates */
+                    $template = GeneralUtility::makeInstance($className, $this->processedFile);
+                    if ($template->canProcessImage()) {
+                        $template->processFile();
+                    }
+                } catch (\Exception $e) {
+                    error_log($className . ' has failed! Error: ' . $e->getMessage());
+                }
             }
         }
     }
+
+    /**
+     * @return ProcessedFile|null
+     */
+    public function getProcessedFile(): ?ProcessedFile
+    {
+        return $this->processedFile;
+    }
+
+    /**
+     * @param ProcessedFile|null $processedFile
+     */
+    public function setProcessedFile(?ProcessedFile $processedFile): void
+    {
+        $this->processedFile = $processedFile;
+    }
+
 }

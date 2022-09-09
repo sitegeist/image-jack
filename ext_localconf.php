@@ -14,10 +14,13 @@ call_user_func(function () {
         ]
     ];
 
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['processors']['ImageJackProcessor'] = [
-        'className' => Sitegeist\ImageJack\Processor\ImageJackProcessor::class,
-        'before' => ['LocalImageProcessor'],
-    ];
+    if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useLiveProcessing'])
+        && $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useLiveProcessing']) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['processors']['ImageJackProcessor'] = [
+            'className' => Sitegeist\ImageJack\Processor\ImageJackProcessor::class,
+            'before' => ['LocalImageProcessor']
+        ];
+    }
 
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']['jpegOptimizer'] =
         \Sitegeist\ImageJack\Templates\JpegTemplate::class;

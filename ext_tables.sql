@@ -1,9 +1,4 @@
-#
-# Table structure for table 'tx_imagejack_domain_model_queue'
-#
-CREATE TABLE tx_imagejack_domain_model_queue
+CREATE TABLE sys_file_processedfile
 (
-	storage int(11) DEFAULT '0' NOT NULL,
-	identifier varchar(512) DEFAULT '' NOT NULL,
-	KEY storage_identifier (storage, identifier)
+	tx_imagejack_processed int(11) DEFAULT '0' NOT NULL
 );

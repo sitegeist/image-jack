@@ -6,3 +6,9 @@ services:
 
   Sitegeist\ImageJack\:
     resource: '../Classes/*'
+
+  Sitegeist\ImageJack\Command\ProcessQueueCommand:
+    tags:
+      - name: 'console.command'
+        command: 'jack:process'
+        description: 'Process the image jack queue'
