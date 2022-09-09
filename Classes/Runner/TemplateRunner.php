@@ -27,10 +27,14 @@ class TemplateRunner
     {
         if (is_a($this->processedFile, ProcessedFile::class)) {
             foreach ($this->templates as $className) {
-                /** @var TemplateInterface $templates */
-                $template = GeneralUtility::makeInstance($className, $this->processedFile);
-                if ($template->canProcessImage()) {
-                    $template->processFile();
+                try {
+                    /** @var TemplateInterface $templates */
+                    $template = GeneralUtility::makeInstance($className, $this->processedFile);
+                    if ($template->canProcessImage()) {
+                        $template->processFile();
+                    }
+                } catch (\Exception $e) {
+                    error_log($className . ' has failed! Error: ' . $e->getMessage());
                 }
             }
         }

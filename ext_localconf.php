@@ -15,7 +15,7 @@ call_user_func(function () {
     ];
 
     if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useLiveProcessing'])
-        &&($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useLiveProcessing'] === true)) {
+        && $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useLiveProcessing']) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['processors']['ImageJackProcessor'] = [
             'className' => Sitegeist\ImageJack\Processor\ImageJackProcessor::class,
             'before' => ['LocalImageProcessor']
