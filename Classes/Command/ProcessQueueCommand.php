@@ -59,7 +59,7 @@ final class ProcessQueueCommand extends Command
         $itemCount = $result->rowCount();
 
         if ($itemCount > 0) {
-            $progress = $io->createProgressBar();
+            $progress = $io->createProgressBar($itemCount);
 
             while ($row = $result->fetchAssociative()) {
                 $processedFile = $processedFileRepository->findByUid($row['uid']);
