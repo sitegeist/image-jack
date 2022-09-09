@@ -1,0 +1,2 @@
+# cat=General; type=boolean; label=Use queue
+useQueue = 1

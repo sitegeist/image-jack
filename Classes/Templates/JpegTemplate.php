@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
-namespace Sitegeist\ImageJack\ImageModifier;
+namespace Sitegeist\ImageJack\Templates;
 
-use Sitegeist\ImageJack\Interfaces\Modifier;
+use Sitegeist\ImageJack\Templates\TemplateInterface;
 use TYPO3\CMS\Core\Log\LogLevel;
 
-class JpegOptimizer extends AbstractModifier implements Modifier
+class JpegTemplate extends AbstractTemplate implements TemplateInterface
 {
 
     public function canProcessImage(): bool

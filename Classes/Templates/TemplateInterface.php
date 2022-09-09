@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
-namespace Sitegeist\ImageJack\Interfaces;
+namespace Sitegeist\ImageJack\Templates;
 
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 
-interface Modifier
+interface TemplateInterface
 {
     public function canProcessImage(): bool;
 
