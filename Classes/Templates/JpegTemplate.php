@@ -8,6 +8,10 @@ use TYPO3\CMS\Core\Log\LogLevel;
 
 class JpegTemplate extends AbstractTemplate implements TemplateInterface
 {
+    public function isActive(): bool
+    {
+        // TODO: Implement isActive() method.
+    }
 
     public function canProcessImage(): bool
     {

@@ -1,2 +1,11 @@
-# cat=General; type=boolean; label=Process images on request:WARNING: Can lead to serious server load!
+# cat=general/enable/1; type=boolean; label=Process images on request:WARNING: Can lead to serious server load!
 useLiveProcessing = 1
+
+webp {
+	# cat=webp/enable/1; type=boolean; label=Activate webp processor
+	active = 1
+	# cat=webp/enable/2; type=options[Local ImageMagick=im,PHP GD=gd,External=ext]; label=Conversion type
+	converter = im
+	# cat=webp/enable/3; type=string; label=Options for Imagemagick, Quality for GD or complete command for external conversion (use %s for source and target)).
+	options = convert -quality 75 -define webp:lossless=false -define webp:method=6
+}
