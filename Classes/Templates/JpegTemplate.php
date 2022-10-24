@@ -11,6 +11,7 @@ class JpegTemplate extends AbstractTemplate implements TemplateInterface
     public function isActive(): bool
     {
         // TODO: Implement isActive() method.
+        return false;
     }
 
     public function canProcessImage(): bool

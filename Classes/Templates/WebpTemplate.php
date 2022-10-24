@@ -30,7 +30,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface
     {
         $converter = $this->extensionConfiguration['webp']['converter'] ?: 'im';
         $options = $this->extensionConfiguration['webp']['options'] ?:
-            'convert -quality 75 -define webp:lossless=false -define webp:method=6';
+            '-quality 75 -define webp:lossless=false -define webp:method=6';
 
         switch ($converter) {
             case 'gd':
@@ -101,9 +101,10 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface
         }
         $binary = explode(' ', $command)[0];
         if (!is_executable($binary)) {
-            $this->logger->writeLog(sprintf('Binary "%s" is not executable!', $binary));
+            $this->logger->writeLog(sprintf('Binary "%s" is not executable! Please use the full path to the binary.', $binary), LogLevel::ERROR);
         }
 
+        $this->logger->writeLog($command, LogLevel::INFO);
         return CommandUtility::exec(sprintf(
             escapeshellcmd($command),
             CommandUtility::escapeShellArgument($this->imagePath),

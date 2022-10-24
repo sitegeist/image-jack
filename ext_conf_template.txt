@@ -7,5 +7,5 @@ webp {
 	# cat=webp/enable/2; type=options[Local ImageMagick=im,PHP GD=gd,External=ext]; label=Conversion type
 	converter = im
 	# cat=webp/enable/3; type=string; label=Options for Imagemagick, Quality for GD or complete command for external conversion (use %s for source and target)).
-	options = convert -quality 75 -define webp:lossless=false -define webp:method=6
+	options = -quality 75 -define webp:lossless=false -define webp:method=6
 }
