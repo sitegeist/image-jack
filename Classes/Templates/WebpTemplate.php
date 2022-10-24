@@ -34,11 +34,11 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface
 
         switch ($converter) {
             case 'gd':
-                $this->convertImageUsingGd($options);
+                $buffer = $this->convertImageUsingGd($options);
                 break;
 
             case 'ext':
-                $this->convertImageUsingExt($options);
+                $buffer = $this->convertImageUsingExt($options);
                 break;
 
             default:
