@@ -10,12 +10,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class WebpTemplate extends AbstractTemplate implements TemplateInterface
 {
-    public function isActive(): bool
-    {
-        return (bool)$this->extensionConfiguration['webp']['active'];
-    }
-
-    public function canProcessImage(): bool
+    public function isAvailable(): bool
     {
         $mimeTypes = [
             'image/jpeg',
@@ -23,7 +18,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface
             'image/gif'
         ];
 
-         return (in_array($this->image->getMimeType(), $mimeTypes));
+        return (in_array($this->image->getMimeType(), $mimeTypes) && $this->extensionConfiguration['webp']['active']);
     }
 
     public function processFile(): void
@@ -77,12 +72,11 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface
             $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
             $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);
             // Convert CMYK to RGB
-            if (!imageistruecolor($image)) {
-                imagepalettetotruecolor($image);
+            if (!imageistruecolor($image)) {/* @phpstan-ignore-line */
+                imagepalettetotruecolor($image);/* @phpstan-ignore-line */
             }
 
-            return imagewebp($image, $this->imagePath . '.webp', (int)$quality);
-
+            return imagewebp($image, $this->imagePath . '.webp', (int)$quality);/* @phpstan-ignore-line */
         } else {
             $this->logger->writeLog('Webp is not supported by your GD version', LogLevel::ERROR);
         }
@@ -101,7 +95,11 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface
         }
         $binary = explode(' ', $command)[0];
         if (!is_executable($binary)) {
-            $this->logger->writeLog(sprintf('Binary "%s" is not executable! Please use the full path to the binary.', $binary), LogLevel::ERROR);
+            $this->logger->writeLog(
+                sprintf('Binary "%s" is not executable! Please use the full path to the binary.', $binary),
+                LogLevel::ERROR
+            );
+            return 'Error! See log for further information.';
         }
 
         $this->logger->writeLog($command, LogLevel::INFO);

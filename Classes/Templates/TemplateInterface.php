@@ -5,9 +5,7 @@ namespace Sitegeist\ImageJack\Templates;
 
 interface TemplateInterface
 {
-    public function isActive(): bool;
-
-    public function canProcessImage(): bool;
+    public function isAvailable(): bool;
 
     public function processFile(): void;
 }

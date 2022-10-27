@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\ImageJack\Runner;
 
-use Sitegeist\ImageJack\Templates\TemplateInterface;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -28,9 +27,8 @@ class TemplateRunner
         if (is_a($this->processedFile, ProcessedFile::class)) {
             foreach ($this->templates as $className) {
                 try {
-                    /** @var TemplateInterface $templates */
                     $template = GeneralUtility::makeInstance($className, $this->processedFile);
-                    if ($template->isActive() && $template->canProcessImage()) {
+                    if ($template->isAvailable()) {
                         $template->processFile();
                     }
                 } catch (\Exception $e) {
@@ -55,5 +53,4 @@ class TemplateRunner
     {
         $this->processedFile = $processedFile;
     }
-
 }

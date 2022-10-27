@@ -11,12 +11,24 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AbstractTemplate
 {
+    /**
+     * @var ProcessedFile
+     */
     protected ProcessedFile $image;
 
+    /**
+     * @var string
+     */
     protected string $imagePath;
 
+    /**
+     * @var LoggerUtility
+     */
     protected LoggerUtility $logger;
 
+    /**
+     * @var array
+     */
     protected array $extensionConfiguration;
 
     public function __construct(ProcessedFile $image)

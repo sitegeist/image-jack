@@ -27,7 +27,7 @@ final class ProcessQueueCommand extends Command
                 'limit',
                 'l',
                 InputOption::VALUE_REQUIRED,
-                'Amout of items to process at once',
+                'Amount of items to process at once',
                 '20'
             );
     }
