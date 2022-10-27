@@ -30,7 +30,7 @@ class TemplateRunner
                 try {
                     /** @var TemplateInterface $templates */
                     $template = GeneralUtility::makeInstance($className, $this->processedFile);
-                    if ($template->canProcessImage()) {
+                    if ($template->isActive() && $template->canProcessImage()) {
                         $template->processFile();
                     }
                 } catch (\Exception $e) {
