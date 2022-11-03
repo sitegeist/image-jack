@@ -1,0 +1,144 @@
+name: tests
+
+on: [ push, pull_request ]
+
+jobs:
+#  phpstan:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: php-actions/composer@v5
+#
+#      - name: PHPStan Static Analysis
+#        uses: php-actions/phpstan@master
+#        with:
+#          path: Classes/
+  phpcs:
+    name: phpcs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validate composer.json
+        run: Build/Scripts/runTests.sh -s composerValidate
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: composer
+
+      - name: Install composer dependencies
+        run: Build/Scripts/runTests.sh -s composerInstall
+
+      - name: PHP Linting
+        run: Build/Scripts/runTests.sh -s lintPhp
+
+  editorconfig:
+    name: editorconfig
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validate composer.json
+        run: Build/Scripts/runTests.sh -s composerValidate
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: composer
+
+      - name: Install composer dependencies
+        run: Build/Scripts/runTests.sh -s composerInstall
+
+      - name: Editorconfig Linting
+        run: Build/Scripts/runTests.sh -s lintEditorconfig
+
+
+#  unittest:
+#    runs-on: ubuntu-latest
+#
+#    strategy:
+#      max-parallel: 2
+#      matrix:
+#        php-versions: [7.4, 8.0, 8.1]
+#        typo3-versions: [10, 11, 12]
+#        exclude:
+#          -
+#            php-versions: '8.0'
+#            typo3-versions: 10
+#          -
+#            php-versions: '8.1'
+#            typo3-versions: 10
+#          -
+#            php-versions: '7.4'
+#            typo3-versions: 12
+#
+#    name: Unit (PHP ${{ matrix.php-versions }}, TYPO3 ${{ matrix.typo3-versions }})
+#    steps:
+#      -
+#        uses: actions/checkout@v2
+#
+#      -
+#        name: Validate composer.json
+#        run: Build/Scripts/runTests.sh -p ${{ matrix.php-versions }} -t ${{ matrix.typo3-versions }} -s composerValidate
+#
+#      -
+#        name: Cache composer dependencies
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.composer/cache
+#          key: php-${{ matrix.php-versions }}-typo3-${{ matrix.typo3-versions }}
+#
+#      -
+#        name: Install composer dependencies
+#        run: Build/Scripts/runTests.sh -p ${{ matrix.php-versions }} -t ${{ matrix.typo3-versions }} -s composerInstall
+#
+#      -
+#        name: Automated Unit Testing
+#        run: Build/Scripts/runTests.sh -p ${{ matrix.php-versions }} -t ${{ matrix.typo3-versions }} -s unit
+#
+#
+#  functionaltest:
+#    runs-on: ubuntu-latest
+#
+#    strategy:
+#      max-parallel: 2
+#      matrix:
+#        php-versions: [ 7.4, 8.0, 8.1 ]
+#        typo3-versions: [ 10, 11, 12 ]
+#        exclude:
+#          -
+#            php-versions: '8.0'
+#            typo3-versions: 10
+#          -
+#            php-versions: '8.1'
+#            typo3-versions: 10
+#          -
+#            php-versions: '7.4'
+#            typo3-versions: 12
+#
+#    name: Functional (PHP ${{ matrix.php-versions }}, TYPO3 ${{ matrix.typo3-versions }})
+#    steps:
+#      -
+#        uses: actions/checkout@v2
+#
+#      -
+#        name: Validate composer.json
+#        run: Build/Scripts/runTests.sh -p ${{ matrix.php-versions }} -t ${{ matrix.typo3-versions }} -s composerValidate
+#
+#      -
+#        name: Cache composer dependencies
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.composer/cache
+#          key: php-${{ matrix.php-versions }}-typo3-${{ matrix.typo3-versions }}
+#
+#      -
+#        name: Install composer dependencies
+#        run: Build/Scripts/runTests.sh -p ${{ matrix.php-versions }} -t ${{ matrix.typo3-versions }} -s composerInstall
+#
+#      -
+#        name: Automated Functional Testing
+#        run: Build/Scripts/runTests.sh -p ${{ matrix.php-versions }} -t ${{ matrix.typo3-versions }} -s functional

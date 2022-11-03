@@ -1,0 +1,9 @@
+includes:
+	- ../../.Build/vendor/saschaegerer/phpstan-typo3/extension.neon
+
+parameters:
+	level: 5
+	excludePaths:
+		- */.Build/*
+		- */Tests/*
+		- */node_modules/*
