@@ -3,17 +3,17 @@ name: tests
 on: [ push, pull_request ]
 
 jobs:
-  phpstan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: php-actions/composer@v5
-
-      - name: PHPStan Static Analysis
-        uses: php-actions/phpstan@master
-        with:
-          path: Classes/
-  lint:
+#  phpstan:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: php-actions/composer@v5
+#
+#      - name: PHPStan Static Analysis
+#        uses: php-actions/phpstan@master
+#        with:
+#          path: Classes/
+  phpcs:
     name: Source code linting
     runs-on: ubuntu-latest
     steps:
@@ -33,6 +33,24 @@ jobs:
 
       - name: PHP Linting
         run: Build/Scripts/runTests.sh -s lintPhp
+
+  editorconfig:
+    name: Source code linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validate composer.json
+        run: Build/Scripts/runTests.sh -s composerValidate
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: composer
+
+      - name: Install composer dependencies
+        run: Build/Scripts/runTests.sh -s composerInstall
 
       - name: Editorconfig Linting
         run: Build/Scripts/runTests.sh -s lintEditorconfig
