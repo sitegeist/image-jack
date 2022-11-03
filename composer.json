@@ -65,6 +65,6 @@
 		],
 		"prepare-release": [
 			"rm -r .github .ecrc .editorconfig .gitattributes Build Tests"
-		],
+		]
 	}
 }
