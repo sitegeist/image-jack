@@ -34,7 +34,7 @@ setUpDockerComposeDotEnv() {
 
 # Load help text into $HELP
 read -r -d '' HELP <<EOF
-fluid_components test runner. Execute unit test suite and some other details.
+image_jack test runner. Execute unit test suite and some other details.
 Also used by github actions for test execution.
 
 Usage: $0 [options] [file]
@@ -205,7 +205,7 @@ DOCKER_PHP_IMAGE=`echo "php${PHP_VERSION}" | sed -e 's/\.//'`
 # Set $1 to first mass argument, this is the optional test file or test directory to execute
 shift $((OPTIND - 1))
 if [ -n "${1}" ]; then
-    TEST_FILE="Web/typo3conf/ext/fluid_components/${1}"
+    TEST_FILE="Web/typo3conf/ext/image_jack/${1}"
 fi
 
 if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
