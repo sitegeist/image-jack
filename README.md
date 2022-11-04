@@ -39,8 +39,8 @@ To start the image processing a command is available:
 ```
 jack:process --limit=20
 ```
-The limit can be changed according to your server capacity.
-
+The images are processed one by one.
+By changing the limit, the number of images to process in one run can be defined.
 
 ## Requirements
 ### webp

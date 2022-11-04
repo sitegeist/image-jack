@@ -27,7 +27,7 @@ final class ProcessQueueCommand extends Command
                 'limit',
                 'l',
                 InputOption::VALUE_REQUIRED,
-                'Amount of items to process at once',
+                'Number of images that are processed consecutively per run',
                 '20'
             );
     }
