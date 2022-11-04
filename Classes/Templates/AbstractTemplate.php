@@ -31,11 +31,11 @@ class AbstractTemplate
      */
     protected array $extensionConfiguration;
 
-    public function __construct(ProcessedFile $image)
+    public function __construct(ProcessedFile $image, LoggerUtility $logger)
     {
         $this->image = $image;
         $this->imagePath = rtrim(Environment::getPublicPath(), '/') . '/' . $image->getPublicUrl();
-        $this->logger = GeneralUtility::makeInstance(LoggerUtility::class);
+        $this->logger = $logger;
         $this->extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
             ->get('image_jack');
     }

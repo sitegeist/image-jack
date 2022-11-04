@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Sitegeist\ImageJack\Runner;
 
+use Sitegeist\ImageJack\Utility\LoggerUtility;
+use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -10,7 +12,15 @@ class TemplateRunner
 {
     protected array $templates = [];
 
+    /**
+     * @var ProcessedFile|null
+     */
     protected ?ProcessedFile $processedFile;
+
+    /**
+     * @var LoggerUtility
+     */
+    protected LoggerUtility $logger;
 
     public function __construct(?ProcessedFile $processedFile)
     {
@@ -20,6 +30,7 @@ class TemplateRunner
         }
 
         $this->processedFile = $processedFile;
+        $this->logger = GeneralUtility::makeInstance(LoggerUtility::class);
     }
 
     public function run(): void
@@ -27,12 +38,12 @@ class TemplateRunner
         if (is_a($this->processedFile, ProcessedFile::class)) {
             foreach ($this->templates as $className) {
                 try {
-                    $template = GeneralUtility::makeInstance($className, $this->processedFile);
+                    $template = GeneralUtility::makeInstance($className, $this->processedFile, $this->logger);
                     if ($template->isAvailable()) {
                         $template->processFile();
                     }
                 } catch (\Exception $e) {
-                    error_log($className . ' has failed! Error: ' . $e->getMessage());
+                    $this->logger->writeLog($className . ' has failed! Error: ' . $e->getMessage(), LogLevel::ERROR);
                 }
             }
         }
