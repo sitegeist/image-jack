@@ -123,6 +123,17 @@ The path to the optipng binary. Please use the complete path as `is_executable` 
 ### Logging
 Just activate the levels that should be written to the log file.
 
+## Custom optimizer/converter templates
+The custom template should extend AbstractTemplate and implement TemplateInterface.
+Just use one of the existing templates as a starting point.
+
+Custom templates can be registered like this:
+```
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']['myCustomTemplate'] = \Vendor\Extension\Templates\CustomTemplate::class;
+```
+Jack will automatically pick up and run the new template if it is available for the given image type.
+
+
 ## Troubleshooting
 A log is written to var/log/typo3_image_jack_*.log
 
