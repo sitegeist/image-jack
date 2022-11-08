@@ -46,15 +46,27 @@ final class ProcessQueueCommand extends Command
             ->getConnectionForTable('sys_file_processedfile')
             ->createQueryBuilder();
 
-        $result = $queryBuilder
-            ->select('uid')
-            ->from('sys_file_processedfile')
-            ->where(
-                $queryBuilder->expr()->eq('tx_imagejack_processed', $queryBuilder->createNamedParameter(0))
-            )
-            ->setMaxResults($limit)
-            ->orderBy('tstamp', 'ASC')
-            ->executeQuery();
+        if (version_compare(TYPO3_version, '11.0', '<')) {
+            $result = $queryBuilder
+                ->select('uid')
+                ->from('sys_file_processedfile')
+                ->where(
+                    $queryBuilder->expr()->eq('tx_imagejack_processed', $queryBuilder->createNamedParameter(0))
+                )
+                ->setMaxResults($limit)
+                ->orderBy('tstamp', 'ASC')
+                ->execute();
+        } else {
+            $result = $queryBuilder
+                ->select('uid')
+                ->from('sys_file_processedfile')
+                ->where(
+                    $queryBuilder->expr()->eq('tx_imagejack_processed', $queryBuilder->createNamedParameter(0))
+                )
+                ->setMaxResults($limit)
+                ->orderBy('tstamp', 'ASC')
+                ->executeQuery();
+        }
 
         $itemCount = $result->rowCount();
 
@@ -69,13 +81,23 @@ final class ProcessQueueCommand extends Command
                     $templateRunner->run();
                 }
 
-                $queryBuilder
-                    ->update('sys_file_processedfile')
-                    ->where(
-                        $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($row['uid']))
-                    )
-                    ->set('tx_imagejack_processed', time())
-                    ->executeStatement();
+                if (version_compare(TYPO3_version, '11.0', '<')) {
+                    $queryBuilder
+                        ->update('sys_file_processedfile')
+                        ->where(
+                            $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($row['uid']))
+                        )
+                        ->set('tx_imagejack_processed', time())
+                        ->execute();
+                } else {
+                    $queryBuilder
+                        ->update('sys_file_processedfile')
+                        ->where(
+                            $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($row['uid']))
+                        )
+                        ->set('tx_imagejack_processed', time())
+                        ->executeStatement();
+                }
 
                 $progress->advance();
             }
