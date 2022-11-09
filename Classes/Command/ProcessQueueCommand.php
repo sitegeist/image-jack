@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ProcessedFileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -41,12 +42,12 @@ final class ProcessQueueCommand extends Command
 
         $templateRunner = GeneralUtility::makeInstance(TemplateRunner::class, null);
         $processedFileRepository = GeneralUtility::makeInstance(ProcessedFileRepository::class);
+        $version = new Typo3Version();
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable('sys_file_processedfile')
             ->createQueryBuilder();
-
-        if (version_compare(TYPO3_version, '11.0', '<')) {
+        if (version_compare($version->getVersion(), '11.0', '<')) {
             $result = $queryBuilder
                 ->select('uid')
                 ->from('sys_file_processedfile')
@@ -81,7 +82,7 @@ final class ProcessQueueCommand extends Command
                     $templateRunner->run();
                 }
 
-                if (version_compare(TYPO3_version, '11.0', '<')) {
+                if (version_compare($version->getVersion(), '11.0', '<')) {
                     $queryBuilder
                         ->update('sys_file_processedfile')
                         ->where(
