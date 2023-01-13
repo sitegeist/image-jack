@@ -1,0 +1,42 @@
+name: typo3-ter-release
+run-name: Release on TYPO3 TER
+
+on:
+  workflow_call:
+    inputs:
+      php-version:
+        default: '8.1'
+        type: string
+    secrets:
+      api-token:
+        required: true
+
+jobs:
+  ter-release:
+    runs-on: ubuntu-latest
+    steps:
+      # Install jq to parse GitHub event
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      # Extract release information from GitHub event
+      - name: Collect release information
+        run: |
+          export EXT_COMMENT=`${GITHUB_EVENT_PATH} | jq  --raw-output '.release.body | @sh'`
+          export EXT_URL=`${GITHUB_EVENT_PATH} | jq --raw-output '.release.zipball_url | @sh`
+          export EXT_VERSION=`${GITHUB_EVENT_PATH} | jq --raw-output '.release.tag_name | ltrimstr("v") | @sh'`
+
+      # Setup PHP and composer
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php-version }}
+          extensions: intl, mbstring, json, zip, curl
+          tools: composer:v2
+
+      # Install tailor CLI
+      - name: Install tailor
+        run: composer global require typo3/tailor --prefer-dist --no-progress --no-suggest
+
+      # - name: Publish extension to TER
+      #   run: TYPO3_API_TOKEN="${{ secrets.api-token }}" php ~/.composer/vendor/bin/tailor ter:publish --comment "${EXT_COMMENT}" --artefact "${EXT_URL}" ${EXT_VERSION}
