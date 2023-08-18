@@ -70,7 +70,7 @@
 			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
 		"prepare-release": [
-			"rm -r .github .ecrc .editorconfig .gitattributes Build Tests"
+			"rm -r .github .ecrc .editorconfig .gitattributes .gitignore Build Tests"
 		]
 	}
 }

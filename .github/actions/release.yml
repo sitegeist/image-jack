@@ -1,0 +1,13 @@
+name: release
+
+on:
+  release:
+    types: ["released"]
+
+jobs:
+  ter-release:
+    uses: ./.github/workflows/terRelease.yml
+    with:
+      php-version: '8.1'
+    secrets:
+      api-token: ${{ secrets.TYPO3_API_TOKEN }}
