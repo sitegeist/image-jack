@@ -11,3 +11,4 @@ jobs:
       php-version: '8.1'
     secrets:
       api-token: ${{ secrets.TYPO3_API_TOKEN }}
+      extension-key: ${{ secrets.TYPO3_EXTENSION_KEY }}

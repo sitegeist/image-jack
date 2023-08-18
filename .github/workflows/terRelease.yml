@@ -10,6 +10,8 @@ on:
     secrets:
       api-token:
         required: true
+      extension-key:
+        required: true
 
 jobs:
   ter-release:
@@ -28,4 +30,4 @@ jobs:
         run: composer global require typo3/tailor --prefer-dist --no-progress --no-suggest
 
       - name: Publish extension to TER
-        run: TYPO3_API_TOKEN="${{ secrets.api-token }}" php ~/.composer/vendor/bin/tailor ter:publish --comment "${{ github.event.release.body }}" --artefact "${{ github.event.release.zipball_url }}" ${{ github.event.release.tag_name }}
+        run: TYPO3_API_TOKEN="${{ secrets.api-token }}" php ~/.composer/vendor/bin/tailor ter:publish --comment "${{ github.event.release.body }}" --artefact "${{ github.event.release.zipball_url }}" ${{ github.event.release.tag_name }} ${{ secrets.extension-key }}
