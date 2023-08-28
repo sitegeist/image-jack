@@ -5,8 +5,8 @@ namespace Sitegeist\ImageJack\Templates;
 
 use Sitegeist\ImageJack\Utility\LoggerUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
+use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AbstractTemplate
@@ -27,6 +27,11 @@ class AbstractTemplate
     protected LoggerUtility $logger;
 
     /**
+     * @var ResourceStorage
+     */
+    protected ResourceStorage $storage;
+
+    /**
      * @var array
      */
     protected array $extensionConfiguration;
@@ -34,7 +39,8 @@ class AbstractTemplate
     public function __construct(ProcessedFile $image, LoggerUtility $logger)
     {
         $this->image = $image;
-        $this->imagePath = rtrim(Environment::getPublicPath(), '/') . '/' . $image->getPublicUrl();
+        $this->storage = $image->getStorage();
+        $this->imagePath = $this->storage->getFileForLocalProcessing($image);
         $this->logger = $logger;
         $this->extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
             ->get('image_jack');
