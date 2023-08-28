@@ -9,7 +9,7 @@ use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class WebpTemplate extends AbstractTemplate implements TemplateInterface
+class WebpTemplate extends AbstractTemplate implements TemplateInterface, ConverterInterface
 {
     public function isAvailable(): bool
     {
@@ -28,6 +28,16 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface
     public function isActive(): bool
     {
         return (bool)$this->extensionConfiguration['webp']['active'];
+    }
+
+    public static function getTargetMimeType(): string
+    {
+        return 'image/webp';
+    }
+
+    public static function getTargetFileExtension(): string
+    {
+        return '.webp';
     }
 
     public function processFile(): void

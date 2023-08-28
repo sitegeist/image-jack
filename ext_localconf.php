@@ -28,4 +28,16 @@ call_user_func(function () {
         \Sitegeist\ImageJack\Templates\PngTemplate::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']['webpConverter'] =
         \Sitegeist\ImageJack\Templates\WebpTemplate::class;
+
+    if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['Local'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['Local']['class']] = [
+            'className' => \Sitegeist\ImageJack\Xclass\LocalDriver::class
+        ];
+    }
+
+    if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['AusDriverAmazonS3'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['AusDriverAmazonS3']['class']] = [
+            'className' => \Sitegeist\ImageJack\Xclass\AmazonS3Driver::class
+        ];
+    }
 });
