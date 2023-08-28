@@ -40,6 +40,8 @@ final class ProcessQueueCommand extends Command
 
         $limit = (int)$input->getOption('limit');
 
+        $safeProcessing = isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['onlyInProcessedFolder']);
+
         $templateRunner = GeneralUtility::makeInstance(TemplateRunner::class, null);
         $processedFileRepository = GeneralUtility::makeInstance(ProcessedFileRepository::class);
         $version = new Typo3Version();
@@ -49,7 +51,7 @@ final class ProcessQueueCommand extends Command
             ->createQueryBuilder();
         if (version_compare($version->getVersion(), '11.0', '<')) {
             $result = $queryBuilder
-                ->select('uid')
+                ->select('uid', 'storage', 'identifier')
                 ->from('sys_file_processedfile')
                 ->where(
                     $queryBuilder->expr()->eq('tx_imagejack_processed', $queryBuilder->createNamedParameter(0))
@@ -59,7 +61,7 @@ final class ProcessQueueCommand extends Command
                 ->execute();
         } else {
             $result = $queryBuilder
-                ->select('uid')
+                ->select('uid', 'storage', 'identifier')
                 ->from('sys_file_processedfile')
                 ->where(
                     $queryBuilder->expr()->eq('tx_imagejack_processed', $queryBuilder->createNamedParameter(0))
@@ -75,11 +77,15 @@ final class ProcessQueueCommand extends Command
             $progress = $io->createProgressBar($itemCount);
 
             while ($row = $result->fetchAssociative()) {
-                $processedFile = $processedFileRepository->findByUid($row['uid']);
+                if ($row['storage'] !== 0) {
+                    if (!empty($row['identifier']) || ($safeProcessing === false)) {
+                        $processedFile = $processedFileRepository->findByUid($row['uid']);
 
-                if (is_a($processedFile, ProcessedFile::class)) {
-                    $templateRunner->setProcessedFile($processedFile);
-                    $templateRunner->run();
+                        if (is_a($processedFile, ProcessedFile::class)) {
+                            $templateRunner->setProcessedFile($processedFile);
+                            $templateRunner->run();
+                        }
+                    }
                 }
 
                 if (version_compare($version->getVersion(), '11.0', '<')) {
