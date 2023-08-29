@@ -33,7 +33,7 @@ trait DriverTrait
 
     protected function sortTemplates($templates): array
     {
-        usort($templates, function($a, $b) {
+        usort($templates, function ($a, $b) {
             if (!method_exists($a, 'getPriority') && (!method_exists($b, 'getPriority'))) {
                 return 0;
             } elseif (!method_exists($a, 'getPriority')) {
