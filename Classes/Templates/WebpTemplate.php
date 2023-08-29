@@ -40,6 +40,11 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
         return '.webp';
     }
 
+    public static function getPriority(): int
+    {
+        return 10;
+    }
+
     public function processFile(): void
     {
         $converter = $this->extensionConfiguration['webp']['converter'] ?: 'im';

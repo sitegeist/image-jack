@@ -8,4 +8,6 @@ interface ConverterInterface
     public static function getTargetMimeType(): string;
 
     public static function getTargetFileExtension(): string;
+
+    public static function getPriority(): int;
 }
