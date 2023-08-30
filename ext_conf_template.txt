@@ -2,7 +2,10 @@
 useLiveProcessing = 0
 
 # cat=general/enable/1; type=boolean; label=Only process images in _processed_ folders
-onlyInProcessedFolder = 1
+useSafeProcessing = 1
+
+# cat=general/enable/1; type=boolean; label=Use the fallback driver xclass to replace image urls:Only use this if the htaccess solution does not work, e.g. for remote storages
+useFallbackDriver = 0
 
 webp {
 	# cat=webp/enable/1; type=boolean; label=Activate webp processor
