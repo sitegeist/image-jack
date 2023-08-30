@@ -39,7 +39,7 @@ final class ProcessQueueCommand extends Command
 
         $limit = (int)$input->getOption('limit');
 
-        $safeProcessing = isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useSafeProcessing']);
+        $safeProcessing = !empty($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useSafeProcessing']);
 
         $templateRunner = GeneralUtility::makeInstance(TemplateRunner::class, null);
         $processedFileRepository = GeneralUtility::makeInstance(ProcessedFileRepository::class);

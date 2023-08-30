@@ -23,8 +23,7 @@ call_user_func(function () {
         ]
     ];
 
-    if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useLiveProcessing'])
-        && $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useLiveProcessing']) {
+    if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useLiveProcessing'])) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['processors']['ImageJackProcessor'] = [
             'className' => Sitegeist\ImageJack\Processor\ImageJackProcessor::class,
             'before' => ['LocalImageProcessor']
@@ -38,7 +37,7 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']['webpConverter'] =
         WebpTemplate::class;
 
-    if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useFallbackDriver'])) {
+    if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useFallbackDriver'])) {
         if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['Local'])) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['Local']['class']] = [
                 'className' => LocalDriver::class
