@@ -12,7 +12,7 @@ composer require "sitegeist/image-jack"
 ```
 * Completely clear all processed images via the maintenance module
 * Flush Caches
-* Change the server configuration (see below)
+* Change the server configuration (see below) or activate the fallback driver xclass
 
 ## Configuration
 ### Webserver
@@ -33,6 +33,12 @@ RewriteRule ^ %{REQUEST_FILENAME}\.webp [L,T=image/webp]
 As we are creating the webP images as copies (keeping the original image
 untouched) this configuration delivers the webP image if the client
 supports it. Otherwise, the original image is served.
+
+As a fallback solution (e.g. for remote storages) there is an option in the extension settings to activate a xclass
+for the storage driver. This solution has one major drawback: The driver is only asked once on cache generation. So it
+is not possible to check the client accept header in every request. The first successful request defines
+which image format is used. Furthermore, there needs to be a class for every storage driver that should be extended.
+The LocalDriver and the AmazonS3Driver are already available.
 
 ### Scheduler / Cronjob
 To start the image processing a command is available:
