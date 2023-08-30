@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Sitegeist\ImageJack\Templates;
 
 use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
-use TYPO3\CMS\Core\Log\LogLevel;
+use Psr\Log\LogLevel;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -84,9 +84,10 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
 
     /**
      * @param string $options
+     * @param string $targetFile
      * @return string
      */
-    protected function convertImageUsingIm(string $options, string $targetFile)
+    protected function convertImageUsingIm(string $options, string $targetFile): string
     {
         $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
         return $graphicalFunctionsObject->imageMagickExec(
@@ -98,9 +99,10 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
 
     /**
      * @param string $quality
+     * @param string $targetFile
      * @return bool
      */
-    protected function convertImageUsingGd(string $quality, string $targetFile)
+    protected function convertImageUsingGd(string $quality, string $targetFile): bool
     {
         if (function_exists('imagewebp') && defined('IMG_WEBP') && (imagetypes() & IMG_WEBP) === IMG_WEBP) {
             $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
@@ -120,9 +122,10 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
 
     /**
      * @param string $command
+     * @param string $targetFile
      * @return string
      */
-    protected function convertImageUsingExt(string $command, string $targetFile)
+    protected function convertImageUsingExt(string $command, string $targetFile): string
     {
         if (substr_count($command, '%s') !== 2) {
             $this->logger->writeLog('Please use two placeholders in your command', LogLevel::ERROR);

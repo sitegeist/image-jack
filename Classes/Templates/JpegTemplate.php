@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\ImageJack\Templates;
 
-use TYPO3\CMS\Core\Log\LogLevel;
+use Psr\Log\LogLevel;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\CommandUtility;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Sitegeist\ImageJack\Runner;
 
 use Sitegeist\ImageJack\Utility\LoggerUtility;
-use TYPO3\CMS\Core\Log\LogLevel;
+use Psr\Log\LogLevel;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
