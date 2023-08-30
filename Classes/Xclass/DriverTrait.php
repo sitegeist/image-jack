@@ -7,17 +7,19 @@ trait DriverTrait
 {
     public function getPublicUrl($identifier): ?string
     {
-        $fileInfo = $this->getFileInfoByIdentifier($identifier, ['mimetype']);
-        $templates = $this->sortAndFilterTemplates($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']);
-        $mimeTypes = $this->extractMimetypesFromTemplates($templates);
-
-        /** @var ConverterInterface $template */
-        foreach ($templates as $template) {
-            $targetFileExtension = $template::getTargetFileExtension();
+        if ($this->fileExists($identifier)) {
+            $fileInfo = $this->getFileInfoByIdentifier($identifier, ['mimetype']);
+            $templates = $this->sortAndFilterTemplates($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']);
+            $mimeTypes = $this->extractMimetypesFromTemplates($templates);
 
             if (!empty($fileInfo['mimetype']) && !in_array($fileInfo['mimetype'], $mimeTypes)) {
-                if ($this->fileExists($identifier . $targetFileExtension)) {
-                    $identifier .= $targetFileExtension;
+                /** @var ConverterInterface $template */
+                foreach ($templates as $template) {
+                    $targetFileExtension = $template::getTargetFileExtension();
+                    if ($this->fileExists($identifier . $targetFileExtension)) {
+                        $identifier .= $targetFileExtension;
+                        break;
+                    }
                 }
             }
         }
