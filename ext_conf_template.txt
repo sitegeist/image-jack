@@ -1,10 +1,10 @@
 # cat=general/enable/1; type=boolean; label=Process images on request:WARNING: Can lead to serious server load!
 useLiveProcessing = 0
 
-# cat=general/enable/1; type=boolean; label=Only process images in _processed_ folders
+# cat=general/enable/2; type=boolean; label=Only process images in _processed_ folders
 useSafeProcessing = 1
 
-# cat=general/enable/1; type=boolean; label=Use the fallback driver xclass to replace image urls:Only use this if the htaccess solution does not work, e.g. for remote storages
+# cat=general/enable/3; type=boolean; label=Use the fallback driver xclass to replace image urls:Only use this if the htaccess solution does not work, e.g. for remote storages
 useFallbackDriver = 0
 
 webp {
