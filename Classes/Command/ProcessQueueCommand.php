@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Sitegeist\ImageJack\Command;
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Exception;
 use Sitegeist\ImageJack\Runner\TemplateRunner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,6 +35,10 @@ final class ProcessQueueCommand extends Command
             );
     }
 
+    /**
+     * @throws DBALException
+     * @throws Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -47,26 +53,19 @@ final class ProcessQueueCommand extends Command
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable('sys_file_processedfile')
             ->createQueryBuilder();
+        $queryBuilder
+            ->select('uid')
+            ->from('sys_file_processedfile')
+            ->where(
+                $queryBuilder->expr()->eq('tx_imagejack_processed', $queryBuilder->createNamedParameter(0))
+            )
+            ->setMaxResults($limit)
+            ->orderBy('tstamp', 'ASC');
+
         if (version_compare($version->getVersion(), '11.0', '<')) {
-            $result = $queryBuilder
-                ->select('uid')
-                ->from('sys_file_processedfile')
-                ->where(
-                    $queryBuilder->expr()->eq('tx_imagejack_processed', $queryBuilder->createNamedParameter(0))
-                )
-                ->setMaxResults($limit)
-                ->orderBy('tstamp', 'ASC')
-                ->execute();
+            $result = $queryBuilder->execute();
         } else {
-            $result = $queryBuilder
-                ->select('uid')
-                ->from('sys_file_processedfile')
-                ->where(
-                    $queryBuilder->expr()->eq('tx_imagejack_processed', $queryBuilder->createNamedParameter(0))
-                )
-                ->setMaxResults($limit)
-                ->orderBy('tstamp', 'ASC')
-                ->executeQuery();
+            $result = $queryBuilder->executeQuery();
         }
 
         $itemCount = $result->rowCount();
@@ -82,22 +81,17 @@ final class ProcessQueueCommand extends Command
                     $templateRunner->run();
                 }
 
+                $queryBuilder
+                    ->update('sys_file_processedfile')
+                    ->where(
+                        $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($row['uid']))
+                    )
+                    ->set('tx_imagejack_processed', time());
+
                 if (version_compare($version->getVersion(), '11.0', '<')) {
-                    $queryBuilder
-                        ->update('sys_file_processedfile')
-                        ->where(
-                            $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($row['uid']))
-                        )
-                        ->set('tx_imagejack_processed', time())
-                        ->execute();
+                    $queryBuilder->execute();
                 } else {
-                    $queryBuilder
-                        ->update('sys_file_processedfile')
-                        ->where(
-                            $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($row['uid']))
-                        )
-                        ->set('tx_imagejack_processed', time())
-                        ->executeStatement();
+                    $queryBuilder->executeStatement();
                 }
 
                 $progress->advance();

@@ -12,11 +12,12 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface
 {
     public function isAvailable(): bool
     {
-        $mimeTypes = [
-            'image/jpeg',
-            'image/png',
-            'image/gif'
-        ];
+        $mimeTypes = [];
+        foreach ($this->extensionConfiguration['webp']['mimeTypes'] as $key => $value) {
+            if ($value) {
+                $mimeTypes[] = 'image/' . $key;
+            }
+        }
 
         return (in_array($this->image->getMimeType(), $mimeTypes) && $this->extensionConfiguration['webp']['active']);
     }
