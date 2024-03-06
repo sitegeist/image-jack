@@ -34,11 +34,12 @@ As we are creating the webP images as copies (keeping the original image
 untouched) this configuration delivers the webP image if the client
 supports it. Otherwise, the original image is served.
 
+#### Storage API (beta)
 As a fallback solution (e.g. for remote storages) there is an option in the extension settings to activate a xclass
-for the storage driver. This solution has one major drawback: The driver is only asked once on cache generation. So it
-is not possible to check the client accept header in every request. The first successful request defines
-which image format is used. Furthermore, there needs to be a class for every storage driver that should be extended.
+for the storage driver. There needs to be a class for every storage driver that should be extended.
 The LocalDriver and the AmazonS3Driver are already available.
+To avoid the cache problem (first client defines the served image format) the image formats from the clients accept header
+are added to the page cache identifier.
 
 ### Scheduler / Cronjob
 To start the image processing a command is available:
@@ -97,6 +98,11 @@ If enabled the images are processed live on request using a LocalImageProcessor.
 This can lead to high load and very long loading times upon first request (depending on the number of images on the page).
 It is recommended to stick with the default and use the available
 command for processing.
+
+#### useFallbackDriver (beta)
+When enabled a xclass is used to extend the getPublicUrl function from the LocalDriver and AmazonS3Driver.
+This can be used if the htaccess solution is not working, e.g. for remote storages.
+See [Storage API (beta)](#storage-api-beta) for more details.
 
 ### WebP
 #### active

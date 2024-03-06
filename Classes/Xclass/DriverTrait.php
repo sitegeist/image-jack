@@ -1,6 +1,7 @@
 <?php
 namespace Sitegeist\ImageJack\Xclass;
 
+use Sitegeist\ImageJack\Helper\RequestHelper;
 use Sitegeist\ImageJack\Templates\ConverterInterface;
 
 trait DriverTrait
@@ -16,7 +17,8 @@ trait DriverTrait
                 /** @var ConverterInterface $template */
                 foreach ($templates as $template) {
                     $targetFileExtension = $template::getTargetFileExtension();
-                    if ($this->fileExists($identifier . $targetFileExtension)) {
+                    if ($this->fileExists($identifier . $targetFileExtension) &&
+                        RequestHelper::checkForMimeTypeInAcceptHeader($GLOBALS['TYPO3_REQUEST'], $template::getTargetMimeType())) {
                         $identifier .= $targetFileExtension;
                         break;
                     }

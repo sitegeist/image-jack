@@ -1,6 +1,7 @@
 <?php
 
 use Psr\Log\LogLevel;
+use Sitegeist\ImageJack\Hook\TsfeHook;
 use Sitegeist\ImageJack\Templates\JpegTemplate;
 use Sitegeist\ImageJack\Templates\PngTemplate;
 use Sitegeist\ImageJack\Templates\WebpTemplate;
@@ -49,5 +50,8 @@ call_user_func(function () {
                 'className' => AmazonS3Driver::class
             ];
         }
+
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['createHashBase'][] =
+            TsfeHook::class . '->postProcessHashBase';
     }
 });
