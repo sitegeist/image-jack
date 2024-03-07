@@ -18,11 +18,14 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
 
     public function getSupportedMimeTypes(): array
     {
-        return [
-            'image/jpeg',
-            'image/png',
-            'image/gif'
-        ];
+        $mimeTypes = [];
+        foreach ($this->extensionConfiguration['webp']['mimeTypes'] as $key => $value) {
+            if ($value) {
+                $mimeTypes[] = 'image/' . $key;
+            }
+        }
+
+        return $mimeTypes;
     }
 
     public function isActive(): bool

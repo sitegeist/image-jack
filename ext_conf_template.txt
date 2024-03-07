@@ -10,9 +10,17 @@ useFallbackDriver = 0
 webp {
 	# cat=webp/enable/1; type=boolean; label=Activate webp processor
 	active = 1
-	# cat=webp/enable/2; type=options[Local ImageMagick=im,PHP GD=gd,External=ext]; label=Conversion type
+    mimeTypes {
+        # cat=webp/enable/2; type=boolean; label=Convert mime-type png
+        png = 1
+        # cat=webp/enable/3; type=boolean; label=Convert mime-type jpeg
+        jpeg = 1
+        # cat=webp/enable/4; type=boolean; label=Convert mime-type gif
+        gif = 1
+    }
+	# cat=webp/enable/5; type=options[Local ImageMagick=im,PHP GD=gd,External=ext]; label=Conversion type
 	converter = im
-	# cat=webp/enable/3; type=string; label=Options for Imagemagick, Quality for GD or complete command for external conversion (use %s for source and target)).
+	# cat=webp/enable/6; type=string; label=Options for Imagemagick, Quality for GD or complete command for external conversion (use %s for source and target)).
 	options = -quality 75 -define webp:lossless=false -define webp:method=6
 }
 

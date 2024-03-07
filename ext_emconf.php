@@ -1,5 +1,5 @@
 <?php
-$EM_CONF['image_jack'] = [
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Image Jack',
     'description' => 'Jack of all trades concerning image optimization. Also introduces the usage of next-gen-image-formats',
     'category' => 'misc',
