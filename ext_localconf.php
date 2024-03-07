@@ -5,6 +5,7 @@ use Sitegeist\ImageJack\Hook\TsfeHook;
 use Sitegeist\ImageJack\Templates\JpegTemplate;
 use Sitegeist\ImageJack\Templates\PngTemplate;
 use Sitegeist\ImageJack\Templates\WebpTemplate;
+use Sitegeist\ImageJack\Templates\AvifTemplate;
 use Sitegeist\ImageJack\Xclass\AmazonS3Driver;
 use Sitegeist\ImageJack\Xclass\LocalDriver;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
@@ -37,6 +38,8 @@ call_user_func(function () {
         PngTemplate::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']['webpConverter'] =
         WebpTemplate::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['image_jack']['templates']['avifConverter'] =
+        AvifTemplate::class;
 
     if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['useFallbackDriver'])) {
         if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['Local'])) {

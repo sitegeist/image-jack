@@ -118,6 +118,20 @@ Depending on the conversion type this field can be used for different purposes:
 * GD: Quality for the new images (1 - 100)
 * External: The complete path to the binary to be used. You can use %s for source and target image.
 
+### Avif
+#### active
+(De)activate the conversion.
+
+#### converter
+Which way should be used to convert the images:
+Imagemagick/GraphicsMagick, GD or an external binary
+
+#### options
+Depending on the conversion type this field can be used for different purposes:
+* IM/GM: Add options that are directly passed to the binary
+* GD: Quality for the new images (1 - 100)
+* External: The complete path to the binary to be used. You can use %s for source and target image.
+
 ### Jpeg
 #### active
 (De)activate the optimization.

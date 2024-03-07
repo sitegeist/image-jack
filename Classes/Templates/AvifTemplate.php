@@ -9,7 +9,7 @@ use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class WebpTemplate extends AbstractTemplate implements TemplateInterface, ConverterInterface
+class AvifTemplate extends AbstractTemplate implements TemplateInterface, ConverterInterface
 {
     public function isAvailable(): bool
     {
@@ -19,7 +19,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
     public function getSupportedMimeTypes(): array
     {
         $mimeTypes = [];
-        foreach ($this->extensionConfiguration['webp']['mimeTypes'] as $key => $value) {
+        foreach ($this->extensionConfiguration['avif']['mimeTypes'] as $key => $value) {
             if ($value) {
                 $mimeTypes[] = 'image/' . $key;
             }
@@ -30,30 +30,30 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
 
     public function isActive(): bool
     {
-        return (bool)$this->extensionConfiguration['webp']['active'];
+        return (bool)$this->extensionConfiguration['avif']['active'];
     }
 
     public static function getTargetMimeType(): string
     {
-        return 'image/webp';
+        return 'image/avif';
     }
 
     public static function getTargetFileExtension(): string
     {
-        return '.webp';
+        return '.avif';
     }
 
     public static function getPriority(): int
     {
-        return 10;
+        return 9;
     }
 
     public function processFile(): void
     {
-        $converter = $this->extensionConfiguration['webp']['converter'] ?: 'im';
-        $options = $this->extensionConfiguration['webp']['options'] ?:
-            '-sharpen 1 -quality 75 -define webp:lossless=false -define webp:method=6';
-        $targetFile = GeneralUtility::tempnam($this->image->getNameWithoutExtension(), '.webp');
+        $converter = $this->extensionConfiguration['avif']['converter'] ?: 'im';
+        $options = $this->extensionConfiguration['avif']['options'] ?:
+            '-sharpen 1 -quality 75 -define avif:speed=0 -define avif:lossless=false +profile "*"';
+        $targetFile = GeneralUtility::tempnam($this->image->getNameWithoutExtension(), '.avif');
 
         switch ($converter) {
             case 'gd':
@@ -73,7 +73,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
             $this->storage->addFile(
                 $targetFile,
                 $this->image->getParentFolder(),
-                $this->image->getName() . '.webp',
+                $this->image->getName() . '.avif',
                 DuplicationBehavior::REPLACE
             );
         } catch (\TypeError $e) {
@@ -107,7 +107,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
      */
     protected function convertImageUsingGd(string $quality, string $targetFile): bool
     {
-        if (function_exists('imagewebp') && defined('IMG_WEBP') && (imagetypes() & IMG_WEBP) === IMG_WEBP) {
+        if (function_exists('imageavif') && defined('IMG_AVIF') && (imagetypes() & IMG_AVIF) === IMG_AVIF) {
             $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
             $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);
             // Convert CMYK to RGB
@@ -115,9 +115,9 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
                 imagepalettetotruecolor($image);/* @phpstan-ignore-line */
             }
 
-            return imagewebp($image, $targetFile, (int)$quality);/* @phpstan-ignore-line */
+            return imageavif($image, $targetFile, (int)$quality);/* @phpstan-ignore-line */
         } else {
-            $this->logger->writeLog('Webp is not supported by your GD version', LogLevel::ERROR);
+            $this->logger->writeLog('Avif is not supported by your GD version', LogLevel::ERROR);
         }
 
         return false;
