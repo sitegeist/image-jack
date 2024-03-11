@@ -7,5 +7,9 @@ interface TemplateInterface
 {
     public function isAvailable(): bool;
 
+    public function getSupportedMimeTypes(): array;
+
+    public function isActive(): bool;
+
     public function processFile(): void;
 }

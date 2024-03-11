@@ -1,6 +1,12 @@
 # cat=general/enable/1; type=boolean; label=Process images on request:WARNING: Can lead to serious server load!
 useLiveProcessing = 0
 
+# cat=general/enable/2; type=boolean; label=Only process images in _processed_ folders
+useSafeProcessing = 1
+
+# cat=general/enable/3; type=boolean; label=Use the fallback driver xclass to replace image urls (beta):Only use this if the htaccess solution does not work, e.g. for remote storages. Beta, use at your own risk!
+useFallbackDriver = 0
+
 webp {
 	# cat=webp/enable/1; type=boolean; label=Activate webp processor
 	active = 1
@@ -15,7 +21,24 @@ webp {
 	# cat=webp/enable/5; type=options[Local ImageMagick=im,PHP GD=gd,External=ext]; label=Conversion type
 	converter = im
 	# cat=webp/enable/6; type=string; label=Options for Imagemagick, Quality for GD or complete command for external conversion (use %s for source and target)).
-	options = -quality 75 -define webp:lossless=false -define webp:method=6
+	options = -sharpen 1 -quality 75 -define webp:lossless=false -define webp:method=6
+}
+
+avif {
+    # cat=avif/enable/1; type=boolean; label=Activate avif processor
+    active = 0
+    mimeTypes {
+        # cat=avif/enable/2; type=boolean; label=Convert mime-type png
+        png = 1
+        # cat=avif/enable/3; type=boolean; label=Convert mime-type jpeg
+        jpeg = 1
+        # cat=avif/enable/4; type=boolean; label=Convert mime-type gif
+        gif = 1
+    }
+    # cat=avif/enable/5; type=options[Local ImageMagick=im,PHP GD=gd,External=ext]; label=Conversion type
+    converter = im
+    # cat=avif/enable/6; type=string; label=Options for Imagemagick, Quality for GD or complete command for external conversion (use %s for source and target)).
+    options = -sharpen 1 -quality 75 -define avif:speed=0 -define avif:lossless=false +profile "*"
 }
 
 jpeg {

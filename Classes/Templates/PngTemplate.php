@@ -3,16 +3,25 @@ declare(strict_types=1);
 
 namespace Sitegeist\ImageJack\Templates;
 
-use TYPO3\CMS\Core\Log\LogLevel;
+use Psr\Log\LogLevel;
+use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\CommandUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PngTemplate extends AbstractTemplate implements TemplateInterface
 {
     public function isAvailable(): bool
     {
-        return (($this->image->getMimeType() === 'image/png') || ($this->image->getMimeType() === 'image/gif') &&
-            ($this->extensionConfiguration['png']['active']));
+        return in_array($this->image->getMimeType(), $this->getSupportedMimeTypes()) && $this->isActive();
+    }
+
+    public function getSupportedMimeTypes(): array
+    {
+        return ['image/png', 'image/gif'];
+    }
+
+    public function isActive(): bool
+    {
+        return (bool)$this->extensionConfiguration['png']['active'];
     }
 
     public function processFile(): void
@@ -31,7 +40,16 @@ class PngTemplate extends AbstractTemplate implements TemplateInterface
             CommandUtility::escapeShellArgument($this->imagePath)
         ) . ' >/dev/null 2>&1');
 
-        GeneralUtility::fixPermissions($this->imagePath);
+        try {
+            $this->storage->addFile(
+                $this->imagePath,
+                $this->image->getParentFolder(),
+                $this->image->getName(),
+                DuplicationBehavior::REPLACE
+            );
+        } catch (\TypeError $e) {
+            // Ignore TypeError => T3 doesn't like writing directly in a processed folder
+        }
 
         if (!empty($buffer)) {
             $this->logger->writeLog(trim($buffer), LogLevel::INFO);
