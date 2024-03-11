@@ -40,6 +40,7 @@ for the storage driver. There needs to be a class for every storage driver that 
 The LocalDriver and the AmazonS3Driver are already available.
 To avoid the cache problem (first client defines the served image format) the image formats from the clients accept header
 are added to the page cache identifier.
+If this option is activated the htaccess modification (see [Webserver](#webserver)) is no longer necessary.
 
 ### Scheduler / Cronjob
 To start the image processing a command is available:
