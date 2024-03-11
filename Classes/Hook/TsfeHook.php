@@ -8,7 +8,7 @@ use TYPO3\CMS\Core\Http\ServerRequest;
 
 class TsfeHook
 {
-    public function postProcessHashBase($params): void
+    public function postProcessHashBase(array $params): void
     {
         /** @var ServerRequest $request */
         $request = $GLOBALS['TYPO3_REQUEST'];

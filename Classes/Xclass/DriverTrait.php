@@ -6,7 +6,7 @@ use Sitegeist\ImageJack\Templates\ConverterInterface;
 
 trait DriverTrait
 {
-    public function getPublicUrl(string $identifier): ?string
+    public function getPublicUrl($identifier): ?string
     {
         if ($this->fileExists($identifier)) {
             $fileInfo = $this->getFileInfoByIdentifier($identifier, ['mimetype']);
