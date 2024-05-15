@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2024-03-22T11:47:18Z" product-name="image_jack">
+		<header/>
+		<body>
+			<trans-unit id="sys_file_reference.tx_imagejack_excluded" xml:space="preserve">
+				<source>Exclude from image_jack processing</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

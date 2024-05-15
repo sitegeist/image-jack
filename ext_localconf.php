@@ -7,6 +7,7 @@ use Sitegeist\ImageJack\Templates\PngTemplate;
 use Sitegeist\ImageJack\Templates\WebpTemplate;
 use Sitegeist\ImageJack\Templates\AvifTemplate;
 use Sitegeist\ImageJack\Xclass\AmazonS3Driver;
+use Sitegeist\ImageJack\Xclass\ImageService;
 use Sitegeist\ImageJack\Xclass\LocalDriver;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
 
@@ -57,4 +58,8 @@ call_user_func(function () {
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['createHashBase'][] =
             TsfeHook::class . '->postProcessHashBase';
     }
+
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Extbase\Service\ImageService::class] = [
+        'className' => ImageService::class
+    ];
 });
