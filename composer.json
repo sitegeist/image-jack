@@ -2,6 +2,7 @@
 	"name": "sitegeist/image-jack",
 	"type": "typo3-cms-extension",
 	"homepage": "https://github.com/sitegeist/image-jack",
+	"version": "0.11.0",
 	"license": [
 		"GPL-2.0-or-later"
 	],
@@ -30,11 +31,12 @@
 		"issues": "https://github.com/sitegeist/image-jack/issues"
 	},
 	"require": {
-		"php": ">=7.4.0",
-		"typo3/cms-core": "^11.5 || ^12.4"
+
+		"php": ">=8.1.0",
+		"typo3/cms-core": "^12.4 || ^13.2"
 	},
 	"require-dev": {
-		"typo3/testing-framework": "^6.0 || dev-main",
+		"typo3/testing-framework": "^8.0 || dev-main",
 		"squizlabs/php_codesniffer": "^3.0",
 		"editorconfig-checker/editorconfig-checker": "^10.0",
 		"phpspec/prophecy-phpunit": "^2.0"
