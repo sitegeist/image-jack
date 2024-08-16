@@ -38,7 +38,8 @@
 		"editorconfig-checker/editorconfig-checker": "*",
 		"phpstan/phpstan": "^1.10",
 		"saschaegerer/phpstan-typo3": "^1.9",
-		"squizlabs/php_codesniffer": "*"
+		"squizlabs/php_codesniffer": "*",
+		"friendsofphp/php-cs-fixer": "^3.62"
 	},
 	"autoload": {
 		"psr-4": {
@@ -71,6 +72,16 @@
 		],
 		"lint:editorconfig": [
 			"ec ."
+		],
+		"fix": [
+			"@fix:php",
+			"@fix:editorconfig"
+		],
+		"fix:php": [
+			"php-cs-fixer fix --diff --config ./Build/Testing/.php_cs.php"
+		],
+		"fix:editorconfig": [
+			"ec --auto-fix --exclude 'Resources\\/Public\\/|package-lock.json|mask.json|LICENSE' ."
 		]
 	}
 }
