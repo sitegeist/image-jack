@@ -3,3 +3,4 @@ composer.lock
 /var
 /Build/.phpunit.result.cache
 /Build/testing-docker/.env
+/vendor

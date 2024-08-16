@@ -35,8 +35,10 @@ final class ProcessQueueCommand extends Command
     }
 
     /**
-     * @throws DBALException
-     * @throws Exception
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

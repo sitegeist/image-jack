@@ -8,7 +8,9 @@ use Sitegeist\ImageJack\Templates\WebpTemplate;
 use Sitegeist\ImageJack\Templates\AvifTemplate;
 use Sitegeist\ImageJack\Xclass\AmazonS3Driver;
 use Sitegeist\ImageJack\Xclass\LocalDriver;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 defined('TYPO3') || die();
 
@@ -54,7 +56,10 @@ call_user_func(function () {
             ];
         }
 
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['createHashBase'][] =
-            TsfeHook::class . '->postProcessHashBase';
+        $version = GeneralUtility::makeInstance(Typo3Version::class);
+        if ($version->getMajorVersion() < 13) {
+            $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['createHashBase'][] =
+                TsfeHook::class . '->postProcessHashBase';
+        }
     }
 });

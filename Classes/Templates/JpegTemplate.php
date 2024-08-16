@@ -43,7 +43,7 @@ class JpegTemplate extends AbstractTemplate implements TemplateInterface
         try {
             $this->storage->addFile(
                 $this->imagePath,
-                $this->image->getParentFolder(),
+                $this->image->getParentFolder(), /* @phpstan-ignore-line */
                 $this->image->getName(),
                 DuplicationBehavior::REPLACE
             );
