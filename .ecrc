@@ -1,22 +1,28 @@
 {
-    "Verbose": false,
-    "Debug": false,
-    "IgnoreDefaults": false,
-    "SpacesAftertabs": false,
-    "NoColor": false,
-    "Exclude": [
-        ".Build",
-        ".git",
-        ".DS_Store",
-        ".xsd",
-        "var/"
-    ],
-    "AllowedContentTypes": [],
-    "PassedFiles": [],
-    "Disable": {
-        "EndOfLine": false,
-        "Indentation": false,
-        "InsertFinalNewline": false,
-        "TrimTrailingWhitespace": false
-    }
+  "Verbose": false,
+  "Debug": false,
+  "IgnoreDefaults": false,
+  "SpacesAftertabs": false,
+  "NoColor": false,
+  "Exclude": [
+    "\\.git",
+    "\\.sql$",
+    "\\.DS_Store",
+    "\\.rst",
+    "\\.idea",
+    "\\.vscode",
+    "\\.phar$",
+    "\\.php_cs\\.cache",
+    "\\.json",
+    "vendor",
+    ".composer_cache"
+  ],
+  "AllowedContentTypes": [],
+  "PassedFiles": [],
+  "Disable": {
+    "EndOfLine": false,
+    "Indentation": false,
+    "InsertFinalNewline": false,
+    "TrimTrailingWhitespace": false
+  }
 }
