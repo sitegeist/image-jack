@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sitegeist\ImageJack\Utility;
 
@@ -59,7 +59,6 @@ class LoggerUtility
      *
      * @param string $message
      * @param string $level
-     * @return void
      */
     public function writeLog(string $message, string $level): void
     {

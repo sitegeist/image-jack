@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sitegeist\ImageJack\Templates;
 
@@ -11,7 +11,7 @@ class JpegTemplate extends AbstractTemplate implements TemplateInterface
 {
     public function isAvailable(): bool
     {
-        return (in_array($this->image->getMimeType(), $this->getSupportedMimeTypes()) && $this->isActive());
+        return in_array($this->image->getMimeType(), $this->getSupportedMimeTypes()) && $this->isActive();
     }
 
     public function getSupportedMimeTypes(): array
@@ -43,7 +43,7 @@ class JpegTemplate extends AbstractTemplate implements TemplateInterface
         try {
             $this->storage->addFile(
                 $this->imagePath,
-                $this->image->getParentFolder(), /* @phpstan-ignore-line */
+                $this->image->getParentFolder(), // @phpstan-ignore-line
                 $this->image->getName(),
                 DuplicationBehavior::REPLACE
             );

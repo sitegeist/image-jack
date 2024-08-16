@@ -2,10 +2,10 @@
 
 use Psr\Log\LogLevel;
 use Sitegeist\ImageJack\Hook\TsfeHook;
+use Sitegeist\ImageJack\Templates\AvifTemplate;
 use Sitegeist\ImageJack\Templates\JpegTemplate;
 use Sitegeist\ImageJack\Templates\PngTemplate;
 use Sitegeist\ImageJack\Templates\WebpTemplate;
-use Sitegeist\ImageJack\Templates\AvifTemplate;
 use Sitegeist\ImageJack\Xclass\AmazonS3Driver;
 use Sitegeist\ImageJack\Xclass\LocalDriver;
 use TYPO3\CMS\Core\Information\Typo3Version;

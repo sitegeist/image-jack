@@ -1,10 +1,10 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sitegeist\ImageJack\Templates;
 
-use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
 use Psr\Log\LogLevel;
+use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\CommandUtility;
@@ -15,7 +15,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
 {
     public function isAvailable(): bool
     {
-        return (in_array($this->image->getMimeType(), $this->getSupportedMimeTypes()) && $this->isActive());
+        return in_array($this->image->getMimeType(), $this->getSupportedMimeTypes()) && $this->isActive();
     }
 
     public function getSupportedMimeTypes(): array
@@ -74,7 +74,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
         try {
             $this->storage->addFile(
                 $targetFile,
-                $this->image->getParentFolder(), /* @phpstan-ignore-line */
+                $this->image->getParentFolder(), // @phpstan-ignore-line
                 $this->image->getName() . '.webp',
                 DuplicationBehavior::REPLACE
             );
@@ -112,20 +112,19 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
         if (function_exists('imagewebp') && defined('IMG_WEBP') && (imagetypes() & IMG_WEBP) === IMG_WEBP) {
             $version = GeneralUtility::makeInstance(Typo3Version::class);
             if ($version->getMajorVersion() == 13) {
-                $graphicalFunctionsObject = GeneralUtility::makeInstance(GifBuilder::class);/* @phpstan-ignore-line */
+                $graphicalFunctionsObject = GeneralUtility::makeInstance(GifBuilder::class);// @phpstan-ignore-line
             } else {
                 $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
             }
-            $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);/* @phpstan-ignore-line */
+            $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);// @phpstan-ignore-line
             // Convert CMYK to RGB
             if (!imageistruecolor($image)) {
                 imagepalettetotruecolor($image);
             }
 
             return imagewebp($image, $targetFile, (int)$quality);
-        } else {
-            $this->logger->writeLog('Webp is not supported by your GD version', LogLevel::ERROR);
         }
+        $this->logger->writeLog('Webp is not supported by your GD version', LogLevel::ERROR);
 
         return false;
     }
