@@ -15,7 +15,8 @@
     "\\.php_cs\\.cache",
     "\\.json",
     "vendor",
-    ".composer_cache"
+    ".composer_cache",
+    ".php-cs-fixer.cache"
   ],
   "AllowedContentTypes": [],
   "PassedFiles": [],
