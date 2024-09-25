@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sitegeist\ImageJack\Templates;
 
@@ -43,7 +43,7 @@ class PngTemplate extends AbstractTemplate implements TemplateInterface
         try {
             $this->storage->addFile(
                 $this->imagePath,
-                $this->image->getParentFolder(),
+                $this->image->getParentFolder(), // @phpstan-ignore-line
                 $this->image->getName(),
                 DuplicationBehavior::REPLACE
             );

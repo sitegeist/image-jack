@@ -1,10 +1,8 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sitegeist\ImageJack\Command;
 
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\Exception;
 use Sitegeist\ImageJack\Runner\TemplateRunner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,8 +33,10 @@ final class ProcessQueueCommand extends Command
     }
 
     /**
-     * @throws DBALException
-     * @throws Exception
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

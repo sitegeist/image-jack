@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sitegeist\ImageJack\Processor;
 
@@ -18,6 +18,7 @@ class ImageJackProcessor extends LocalImageProcessor
         parent::processTask($task);
         $processedFile = $task->getTargetFile();
 
+        /** @var TemplateRunner $templateRunner */
         $templateRunner = GeneralUtility::makeInstance(TemplateRunner::class, $processedFile);
         $templateRunner->run();
 

@@ -3,3 +3,6 @@ composer.lock
 /var
 /Build/.phpunit.result.cache
 /Build/testing-docker/.env
+/vendor
+.php-cs-fixer.cache
+public

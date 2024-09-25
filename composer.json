@@ -2,6 +2,7 @@
 	"name": "sitegeist/image-jack",
 	"type": "typo3-cms-extension",
 	"homepage": "https://github.com/sitegeist/image-jack",
+	"version": "0.11.0",
 	"license": [
 		"GPL-2.0-or-later"
 	],
@@ -30,28 +31,22 @@
 		"issues": "https://github.com/sitegeist/image-jack/issues"
 	},
 	"require": {
-		"php": ">=7.4.0",
-		"typo3/cms-core": "^11.5 || ^12.4"
+		"php": ">=8.1.0",
+		"typo3/cms-core": "^12.4 || ^13.2"
 	},
 	"require-dev": {
-		"typo3/testing-framework": "^6.0 || dev-main",
-		"squizlabs/php_codesniffer": "^3.0",
-		"editorconfig-checker/editorconfig-checker": "^10.0",
-		"phpspec/prophecy-phpunit": "^2.0"
+		"editorconfig-checker/editorconfig-checker": "*",
+		"phpstan/phpstan": "^1.10",
+		"saschaegerer/phpstan-typo3": "^1.9",
+		"squizlabs/php_codesniffer": "*",
+		"friendsofphp/php-cs-fixer": "^3.62"
 	},
 	"autoload": {
 		"psr-4": {
 			"Sitegeist\\ImageJack\\": "Classes"
 		}
 	},
-	"autoload-dev": {
-		"psr-4": {
-			"Sitegeist\\ImageJack\\Tests\\": "Tests"
-		}
-	},
 	"config": {
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin",
 		"allow-plugins": {
 			"typo3/cms-composer-installers": true,
 			"typo3/class-alias-loader": true
@@ -60,17 +55,33 @@
 	"extra": {
 		"typo3/cms": {
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
-			"app-dir": ".Build",
-			"web-dir": ".Build/Web",
 			"extension-key": "image_jack"
 		}
 	},
 	"scripts": {
-		"post-autoload-dump": [
-			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
-		],
 		"prepare-release": [
 			"rm -r .github .ecrc .editorconfig .gitattributes .gitignore Build Tests"
+		],
+		"lint": [
+			"@lint:php",
+			"@lint:editorconfig"
+		],
+		"lint:php": [
+			"php -d memory_limit=-1 ./vendor/bin/phpstan analyse --configuration=./Build/Testing/phpstan.neon .",
+			"phpcs --standard=PSR2 --extensions=php --warning-severity=6 --ignore=/vendor/ ."
+		],
+		"lint:editorconfig": [
+			"ec ."
+		],
+		"fix": [
+			"@fix:php",
+			"@fix:editorconfig"
+		],
+		"fix:php": [
+			"php-cs-fixer fix --diff --config ./Build/Testing/.php_cs.php"
+		],
+		"fix:editorconfig": [
+			"ec --auto-fix --exclude 'Resources\\/Public\\/|package-lock.json|mask.json|LICENSE' ."
 		]
 	}
 }

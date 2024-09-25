@@ -1,19 +1,21 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sitegeist\ImageJack\Templates;
 
-use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
 use Psr\Log\LogLevel;
+use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Imaging\GifBuilder;
 
 class WebpTemplate extends AbstractTemplate implements TemplateInterface, ConverterInterface
 {
     public function isAvailable(): bool
     {
-        return (in_array($this->image->getMimeType(), $this->getSupportedMimeTypes()) && $this->isActive());
+        return in_array($this->image->getMimeType(), $this->getSupportedMimeTypes()) && $this->isActive();
     }
 
     public function getSupportedMimeTypes(): array
@@ -57,7 +59,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
 
         switch ($converter) {
             case 'gd':
-                $buffer = $this->convertImageUsingGd($options, $targetFile);
+                $buffer = (string)$this->convertImageUsingGd($options, $targetFile);
                 break;
 
             case 'ext':
@@ -72,7 +74,7 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
         try {
             $this->storage->addFile(
                 $targetFile,
-                $this->image->getParentFolder(),
+                $this->image->getParentFolder(), // @phpstan-ignore-line
                 $this->image->getName() . '.webp',
                 DuplicationBehavior::REPLACE
             );
@@ -108,17 +110,21 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
     protected function convertImageUsingGd(string $quality, string $targetFile): bool
     {
         if (function_exists('imagewebp') && defined('IMG_WEBP') && (imagetypes() & IMG_WEBP) === IMG_WEBP) {
-            $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
-            $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);
+            $version = GeneralUtility::makeInstance(Typo3Version::class);
+            if ($version->getMajorVersion() == 13) {
+                $graphicalFunctionsObject = GeneralUtility::makeInstance(GifBuilder::class);// @phpstan-ignore-line
+            } else {
+                $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
+            }
+            $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);// @phpstan-ignore-line
             // Convert CMYK to RGB
-            if (!imageistruecolor($image)) {/* @phpstan-ignore-line */
-                imagepalettetotruecolor($image);/* @phpstan-ignore-line */
+            if (!imageistruecolor($image)) {
+                imagepalettetotruecolor($image);
             }
 
-            return imagewebp($image, $targetFile, (int)$quality);/* @phpstan-ignore-line */
-        } else {
-            $this->logger->writeLog('Webp is not supported by your GD version', LogLevel::ERROR);
+            return imagewebp($image, $targetFile, (int)$quality);
         }
+        $this->logger->writeLog('Webp is not supported by your GD version', LogLevel::ERROR);
 
         return false;
     }

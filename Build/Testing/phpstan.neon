@@ -1,5 +1,5 @@
 includes:
-	- ../../.Build/vendor/saschaegerer/phpstan-typo3/extension.neon
+	- ../../vendor/saschaegerer/phpstan-typo3/extension.neon
 
 parameters:
 	level: 5
@@ -7,3 +7,6 @@ parameters:
 		- */.Build/*
 		- */Tests/*
 		- */node_modules/*
+		- */vendor/*
+		- */Classes/Xclass/AmazonS3Driver.php
+		- */Classes/EventListener/MimeTypeCacheParams.php

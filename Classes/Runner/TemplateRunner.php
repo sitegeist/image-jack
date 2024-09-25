@@ -1,10 +1,10 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sitegeist\ImageJack\Runner;
 
-use Sitegeist\ImageJack\Utility\LoggerUtility;
 use Psr\Log\LogLevel;
+use Sitegeist\ImageJack\Utility\LoggerUtility;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
