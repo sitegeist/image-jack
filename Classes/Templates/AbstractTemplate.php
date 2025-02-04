@@ -40,7 +40,7 @@ class AbstractTemplate
     {
         $this->image = $image;
         $this->storage = $image->getStorage();
-        $this->imagePath = $this->storage->getFileForLocalProcessing($image);
+        $this->imagePath = $this->storage->getFileForLocalProcessing($image, false);
         $this->logger = $logger;
         $this->extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
             ->get('image_jack');
