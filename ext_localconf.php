@@ -1,6 +1,7 @@
 <?php
 
 use Psr\Log\LogLevel;
+use Sitegeist\ImageJack\Core\Filter\FileNameFilter;
 use Sitegeist\ImageJack\Hook\TsfeHook;
 use Sitegeist\ImageJack\Templates\AvifTemplate;
 use Sitegeist\ImageJack\Templates\JpegTemplate;
@@ -31,6 +32,13 @@ call_user_func(function () {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['processors']['ImageJackProcessor'] = [
             'className' => Sitegeist\ImageJack\Processor\ImageJackProcessor::class,
             'before' => ['LocalImageProcessor']
+        ];
+    }
+
+    if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['image_jack']['hideFiles'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['defaultFilterCallbacks'][] = [
+            FileNameFilter::class,
+            'filterFilesByPattern',
         ];
     }
 
