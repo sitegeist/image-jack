@@ -38,7 +38,7 @@ jobs:
           warning_severity: 6
 
   editorconfig:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: editorconfig-checker/action-editorconfig-checker@main
