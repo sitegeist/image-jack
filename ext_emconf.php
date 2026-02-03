@@ -9,11 +9,11 @@ $EM_CONF['image_jack'] = [
     'state' => 'beta',
     'uploadfolder' => false,
     'clearCacheOnLoad' => true,
-    'version' => '0.11.0',
+    'version' => '0.11.1',
     'constraints' => [
         'depends' => [
             'typo3' => '12.4.0-13.9.99',
-            'php' => '8.1.0-8.3.99'
+            'php' => '8.2.0-8.4.99'
         ],
         'conflicts' => [
         ],
