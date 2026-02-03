@@ -101,6 +101,8 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
             $options
         );
 
+        // imageMagickExec might return false. phpdoc of function imageMagickExec is wrong
+        // @phpstan-ignore identical.alwaysFalse
         if ($execResponse === false) {
             $this->logger->writeLog('convert error on ' . $targetFile, LogLevel::ERROR);
             return '';
@@ -119,11 +121,11 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
         if (function_exists('imagewebp') && defined('IMG_WEBP') && (imagetypes() & IMG_WEBP) === IMG_WEBP) {
             $version = GeneralUtility::makeInstance(Typo3Version::class);
             if ($version->getMajorVersion() == 13) {
-                $graphicalFunctionsObject = GeneralUtility::makeInstance(GifBuilder::class);// @phpstan-ignore-line
+                $graphicalFunctionsObject = GeneralUtility::makeInstance(GifBuilder::class);
             } else {
                 $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
             }
-            $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);// @phpstan-ignore-line
+            $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);
             // Convert CMYK to RGB
             if (!imageistruecolor($image)) {
                 imagepalettetotruecolor($image);

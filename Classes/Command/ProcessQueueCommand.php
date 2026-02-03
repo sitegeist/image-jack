@@ -73,10 +73,8 @@ final class ProcessQueueCommand extends Command
                     if (!empty($row['identifier']) || ($safeProcessing === false)) {
                         $processedFile = $processedFileRepository->findByUid($row['uid']);
 
-                        if (is_a($processedFile, ProcessedFile::class)) {
-                            $templateRunner->setProcessedFile($processedFile);
-                            $templateRunner->run();
-                        }
+                        $templateRunner->setProcessedFile($processedFile);
+                        $templateRunner->run();
                     }
                 }
                 $queryBuilder
