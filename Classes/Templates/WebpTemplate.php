@@ -95,11 +95,18 @@ class WebpTemplate extends AbstractTemplate implements TemplateInterface, Conver
     protected function convertImageUsingIm(string $options, string $targetFile): string
     {
         $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
-        return $graphicalFunctionsObject->imageMagickExec(
+        $execResponse = $graphicalFunctionsObject->imageMagickExec(
             $this->imagePath,
             $targetFile,
             $options
         );
+
+        if ($execResponse === false) {
+            $this->logger->writeLog('convert error on ' . $targetFile, LogLevel::ERROR);
+            return '';
+        }
+
+        return $execResponse;
     }
 
     /**
