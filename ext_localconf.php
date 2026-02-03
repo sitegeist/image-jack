@@ -6,7 +6,6 @@ use Sitegeist\ImageJack\Templates\AvifTemplate;
 use Sitegeist\ImageJack\Templates\JpegTemplate;
 use Sitegeist\ImageJack\Templates\PngTemplate;
 use Sitegeist\ImageJack\Templates\WebpTemplate;
-use Sitegeist\ImageJack\Xclass\AmazonS3Driver;
 use Sitegeist\ImageJack\Xclass\LocalDriver;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
@@ -52,7 +51,7 @@ call_user_func(function () {
 
         if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['AusDriverAmazonS3'])) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['registeredDrivers']['AusDriverAmazonS3']['class']] = [
-                'className' => AmazonS3Driver::class
+                'className' => 'Sitegeist\ImageJack\Xclass\AmazonS3Driver'
             ];
         }
 

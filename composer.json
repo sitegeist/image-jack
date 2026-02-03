@@ -31,8 +31,9 @@
 		"issues": "https://github.com/sitegeist/image-jack/issues"
 	},
 	"require": {
-		"php": ">=8.1.0",
-		"typo3/cms-core": "^12.4 || ^13.2"
+		"php": ">=8.2.0",
+		"typo3/cms-core": "^12.4 || ^13.4",
+		"typo3/cms-frontend": "^12.4 || ^13.4"
 	},
 	"require-dev": {
 		"editorconfig-checker/editorconfig-checker": "*",

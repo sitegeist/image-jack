@@ -113,11 +113,11 @@ class AvifTemplate extends AbstractTemplate implements TemplateInterface, Conver
             /** @var Typo3Version $version */
             $version = GeneralUtility::makeInstance(Typo3Version::class);
             if ($version->getMajorVersion() == 13) {
-                $graphicalFunctionsObject = GeneralUtility::makeInstance(GifBuilder::class);// @phpstan-ignore-line
+                $graphicalFunctionsObject = GeneralUtility::makeInstance(GifBuilder::class);
             } else {
                 $graphicalFunctionsObject = GeneralUtility::makeInstance(GraphicalFunctions::class);
             }
-            $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);// @phpstan-ignore-line
+            $image = $graphicalFunctionsObject->imageCreateFromFile($this->imagePath);
             // Convert CMYK to RGB
             if (!imageistruecolor($image)) {
                 imagepalettetotruecolor($image);
