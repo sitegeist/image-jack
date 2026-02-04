@@ -3,7 +3,7 @@ Jack of all trades concerning image optimization. Also introduces the usage of n
 
 ## What does it do?
 Adds the possibility to optimize existing jpg, gif and png files during processing.
-Furthermore, it can add a webP copy of every processed image.
+Furthermore, it can add a Avif and webP copy of every processed image.
 
 ## Installation
 Use composer to add the extension:
@@ -16,23 +16,27 @@ composer require "sitegeist/image-jack"
 
 ## Configuration
 ### Webserver
-To deliver the webP images, the webserver needs to be configured properly.
+To deliver the Avif and webP images, the webserver needs to be configured properly.
 Example for Apache (.htaccess):
 ```
-RewriteCond %{HTTP_ACCEPT} image/webp
-RewriteCond %{REQUEST_FILENAME} (.*)\.(png|gif|jpe?g)$
-RewriteCond %{REQUEST_FILENAME}\.webp -f
-RewriteRule ^ %{REQUEST_FILENAME}\.webp [L,T=image/webp]
+    RewriteCond %{HTTP_ACCEPT} image/avif
+    RewriteCond %{REQUEST_FILENAME}\.avif -f
+    RewriteRule ^ %{REQUEST_FILENAME}.avif [L,T=image/avif]
 
+    RewriteCond %{HTTP_ACCEPT} image/webp
+    RewriteCond %{REQUEST_FILENAME}\.webp -f
+    RewriteRule ^ %{REQUEST_FILENAME}\.webp [L,T=image/webp]
+```
+You might also need this snipped:
+```
 <IfModule mod_headers.c>
     <FilesMatch "\.(png|gif|jpe?g)$">
         Header append Vary Accept
     </FilesMatch>
 </IfModule>
 ```
-As we are creating the webP images as copies (keeping the original image
-untouched) this configuration delivers the webP image if the client
-supports it. Otherwise, the original image is served.
+As we are creating the Avif/webP images as copies (keeping the original image untouched)
+this configuration delivers the Avif/webP image if the client supports it. Otherwise, the original image is served.
 
 #### Storage API (beta)
 As a fallback solution (e.g. for remote storages) there is an option in the extension settings to activate a xclass
