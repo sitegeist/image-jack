@@ -7,6 +7,12 @@ useSafeProcessing = 1
 # cat=general/enable/3; type=boolean; label=Use the fallback driver xclass to replace image urls (beta):Only use this if the htaccess solution does not work, e.g. for remote storages. Beta, use at your own risk!
 useFallbackDriver = 0
 
+# cat=general/enable/4; type=boolean; label=Hide files matching the below pattern in backend file list module
+hideFiles = 0
+
+# cat=general/enable/5; type=string; label=Pattern to hide files in backend file list module
+hideFilesPattern = /\.(jpe?g|png|gif)\.webp$/i
+
 webp {
 	# cat=webp/enable/1; type=boolean; label=Activate webp processor
 	active = 1
