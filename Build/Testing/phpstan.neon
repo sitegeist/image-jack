@@ -10,3 +10,4 @@ parameters:
 		- */vendor/*
 		- */Classes/Xclass/AmazonS3Driver.php
 		- */Classes/EventListener/MimeTypeCacheParams.php
+		- */Classes/Service/CleanUpLocalProcessedFilesService.php
